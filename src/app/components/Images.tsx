@@ -13,23 +13,26 @@ interface ImageData {
 
 interface Props {
   filterImages: ImageData[];
+  loading: boolean
 }
 
-export default function Images({ filterImages }: Props) {
+export default function Images({ filterImages, loading }: Props) {
   console.log(filterImages);
-  
+
   return (
     <div className='p-10 grid grid-cols-1 gap-3 md:grid-cols-4 max-md:p-3'>
-      {filterImages && filterImages.map((data, index) => (
-        <div key={data.id} className='w-full h-[350px] bg-red-500'>
-          {/* Check if url and url.regular exist before rendering the image */}
-          {data.urls?.regular ? (
-            <img src={data.urls.regular} alt={`Image ${index}`} className='w-full h-full object-cover' />
-          ) : (
-            <p>No image available</p>  // Placeholder if the image is missing
-          )}
-        </div>
-      ))}
+      {loading ? "loading" : <>
+        {filterImages && filterImages.map((data, index) => (
+          <div key={data.id} className='w-full h-[350px] bg-[rgba(255, 255, 255, 0.1)] image-container'>
+            {/* Check if url and url.regular exist before rendering the image */}
+            {data.urls?.regular ? (
+              <img src={data.urls.regular} alt={`Image ${index}`} className='w-full h-full object-cover' />
+            ) : (
+              <p>No image available</p>  // Placeholder if the image is missing
+            )}
+          </div>
+        ))}
+      </>}
     </div>
   );
 }

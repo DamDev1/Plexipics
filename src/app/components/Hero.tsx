@@ -2,19 +2,28 @@ import axios from 'axios';
 import Image from 'next/image'
 import React, { useState } from 'react'
 
-interface Props {
-  setFilterImage: (images: ImageData[]) => void;
+interface ImageData {
+  results: string
 }
 
-export default function Hero({setFilterImage}:Props) {
+interface Props {
+  setFilterImage: (images: ImageData[]) => void;
+  setLoading: any;
+}
+
+export default function Hero({setFilterImage, setLoading}:Props) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const handleSearch = async() =>{
+    setLoading(true)
     try {
-      const res = await axios.get('https://api.unsplash.com/photos/?client_id=6_OXlV7zPBLfaXW4LnZGl3hGCgi738xG3nDyjfAZNpA'+"&&page=1&query=car")
-      setFilterImage(res.data)
+      const res = await axios.get(`https://api.unsplash.com/search/photos?query=${searchQuery}&per_page=20&page=1&client_id=6_OXlV7zPBLfaXW4LnZGl3hGCgi738xG3nDyjfAZNpA`)
+      setFilterImage(res.data.results)
+      setLoading(false)
     } catch (error) {
-      
+      setLoading(false)
+    } finally{
+      setLoading(false)
     }
   }
   return (
