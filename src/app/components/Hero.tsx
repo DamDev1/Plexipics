@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 
 interface ImageData {
   id: string;
@@ -18,6 +18,7 @@ interface Props {
 export default function Hero({ setFilterImage, setLoading }: Props) {
   const [searchQuery, setSearchQuery] = useState('');
 
+
   const handleSearch = async () => {
     setLoading(true);
     try {
@@ -32,7 +33,7 @@ export default function Hero({ setFilterImage, setLoading }: Props) {
 
   return (
     <div>
-      <div className='w-full h-[250px] overflow-hidden relative'>
+      <div className='w-full h-[400px] overflow-hidden relative'>
         <img
           src="https://images.unsplash.com/photo-1724271364272-fb23971633f6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Hero Background"
