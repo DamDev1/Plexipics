@@ -3,7 +3,7 @@ import Hero from "./components/Hero";
 import Suggestion from "./components/Suggestion";
 import Images from "./components/Images";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface UnsplashImage {
   id: string;
