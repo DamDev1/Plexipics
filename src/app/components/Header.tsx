@@ -7,12 +7,14 @@ export default function Header() {
         Plexi<span className='text-blue-600'>pics</span>
       </div>
 
-      <nav className='flex items-center gap-8'>
+      <nav className='flex items-center gap-8 max-md:hidden'>
         <li className='list-none cursor-pointer'>Nature</li>
         <li className='list-none cursor-pointer'>Cars</li>
         <li className='list-none cursor-pointer'>Mountains</li>
         <li className='list-none cursor-pointer'>Houses</li>
       </nav>
+
+
     </div>
   )
 }
