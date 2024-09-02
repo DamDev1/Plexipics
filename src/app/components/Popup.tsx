@@ -6,14 +6,26 @@ interface ImageUrl {
     regular: string;
 }
 
-interface LinksUrls{
+interface LinksUrls {
     download: string;
+}
+
+interface UserInfo {
+    username: string;
+    name: string;
+    profile_image: UserProfile;
+}
+
+interface UserProfile{
+    small: string;
 }
 
 interface ImageData {
     urls?: ImageUrl;
     alt_description?: string;
     links?: LinksUrls;
+    user?: UserInfo;
+    description?: string;
 }
 
 interface PopupModalProps {
@@ -25,10 +37,6 @@ interface PopupModalProps {
 export default function PopupModal({ isOpen, passData, onClose }: PopupModalProps) {
     if (!isOpen || !passData) return null;
 
-    console.log(passData.links?.download)
-
-
-
     return (
         <div
             className='w-[100%] fixed h-[100vh] bg-[rgba(0,0,0,0.5)] top-0 left-0 z-10 flex items-center justify-center'
@@ -36,13 +44,31 @@ export default function PopupModal({ isOpen, passData, onClose }: PopupModalProp
             style={{ display: `${!isOpen ? 'none' : 'flex'}` }}
         >
             <div
-                className='w-[50rem] h-[30rem] bg-white rounded grid grid-cols-2 overflow-hidden'
+                className='w-[50rem] h-[30rem] bg-white rounded grid grid-cols-2 overflow-y-scroll'
                 onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside the modal content
             >
                 <div className='col-span-2 relative'>
-                    <button onClick={onClose} className='absolute top-3 right-3 text-black bg-gray-200 p-1 rounded'>Close</button>
-                    <div className='grid grid-cols-2 '>
-                        <div>
+                    <div className='absolute top-5 right-3 flex gap-3 items-center justify-center'>
+                        <Link href={'#'} download={passData.links?.download} className='text-white bg-green-500 p-2 rounded'>Download</Link>
+                        <button onClick={onClose} className='text-[2rem] mt-[-0.5rem]'>&times;</button>
+                    </div>
+                    <div className='grid grid-cols-1 p-3'>
+                        <div className='mt-2'>
+                            <div className="flex gap-2 items-center">
+                                <div className="w-[2rem] h-[2rem] rounded-full overflow-hidden">
+                                    <img src={passData.user?.profile_image?.small} alt="" />
+                                </div>
+                                <div className='flex flex-col'>
+                                    <h2 className='text-sm font-semibold'>{passData.user?.name}</h2>
+                                    <p className='text-sm'>{passData.user?.username}</p>
+                                </div>
+                            </div>
+                            <div className='mt-8'>
+                                <h2 className='font-bold text-[1.2rem]'>Nature Images</h2>
+                                <p>{passData.description == null ? (passData.alt_description) : (passData.description)}</p>
+                            </div>
+                        </div>
+                        <div className='mt-5'>
                             {passData.urls?.full ? (
                                 <img
                                     src={passData.urls.full}
@@ -52,11 +78,6 @@ export default function PopupModal({ isOpen, passData, onClose }: PopupModalProp
                             ) : (
                                 <p className='text-center'>No image available</p>
                             )}
-                        </div>
-
-                        <div className='p-5'>
-                            <h1 className='mt-10 font-bold text-[1.1rem]'>{passData.alt_description}</h1>
-                            <Link href={'#'} download={passData.links?.download} className='bg-green-600 p-2 text-white rounded-lg cursor-pointer'>Download</Link>
                         </div>
                     </div>
                 </div>
